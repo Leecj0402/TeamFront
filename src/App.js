@@ -12,11 +12,12 @@ import Users from './components/Users/Users';
 import * as Auth from './Firebase/authContext';
 
 // 페이지 컴포넌트 임포트
-import Home from './pages/Home';
-import Search from './pages/Search';
-import Metaverse from './pages/Metaverse'; // Explore를 Metaverse로 변경
-import Messages from './pages/Messages';
-import Profile from './pages/Profile';
+import Home from './Home.js';
+import Search from './Search.js';
+import Metaverse from './Metaverse.js';
+import Profile from './Profile.js';
+import Message from './components/Messages.js';
+
 
 export default function App() {
   const { username, posts, user } = Auth.useAuth();
@@ -24,9 +25,12 @@ export default function App() {
   return (
     <Router>
       <div className="App">
+        {/* 왼쪽 사이드바 */}
         <Sidebar />
 
+        {/* 오른쪽 본문 영역 */}
         <div className="app_content">
+          {/* 헤더 영역 */}
           <div className="app_header">
             <img
               className="app_headerImage"
@@ -43,15 +47,17 @@ export default function App() {
             </div>
           </div>
 
+          {/* 라우트 정의 */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/metaverse" element={<Metaverse />} /> {/* Metaverse 경로 추가 */}
-            <Route path="/messages" element={<Messages />} />
+            <Route path="/metaverse" element={<Metaverse />} />
+            <Route path="/messages" element={<Message />} /> {/* Messages 경로 추가 */}
             <Route path="/upload" element={<Upload />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
 
+          {/* 기본 피드와 사용자 업로드 */}
           <div className="app_body">
             <Users />
             {username && <Upload />}

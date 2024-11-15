@@ -21,7 +21,7 @@ export default function Sidebar() {
         <Search />
         <span>검색</span>
       </Link>
-      <Link to="/metaverse" className="sidebar_option"> {/* Metaverse 경로로 변경 */}
+      <Link to="/metaverse" className="sidebar_option">
         <Explore />
         <span>메타버스</span>
       </Link>
