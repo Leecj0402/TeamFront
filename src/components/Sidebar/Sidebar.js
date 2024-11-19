@@ -2,15 +2,16 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Home, Search, Explore, Message, AddCircle, AccountCircle } from '@material-ui/icons';
+import { Home, Search, Explore, Message, AddCircle, AccountCircle } from '@mui/icons-material';
 import './Sidebar.css';
+import newLogo from '../../assets/favicon.png'; // 로컬 이미지 파일 가져오기
 
 export default function Sidebar() {
   return (
     <div className="sidebar">
-      <img 
-        src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" 
-        alt="Instagram Logo" 
+      <img
+        src={newLogo} // 로컬 이미지 변수 사용
+        alt="Baesh Logo"
         className="sidebar_logo"
       />
       <Link to="/" className="sidebar_option">

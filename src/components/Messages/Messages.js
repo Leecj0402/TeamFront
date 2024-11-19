@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useState, useEffect } from 'react';
-import { db } from '../Firebase/firebase.js'; // Firebase 설정 파일 경로
 import './Messages.css';
 
 export default function Message() {
@@ -10,44 +9,38 @@ export default function Message() {
   const [messages, setMessages] = useState([]); // 메시지 목록
   const [newMessage, setNewMessage] = useState(''); // 입력 중인 메시지
 
-  // 연락처 목록 가져오기
+  // 연락처 목록 설정 (더미 데이터)
   useEffect(() => {
-    db.collection('users')
-      .get()
-      .then((snapshot) => {
-        const users = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setContacts(users);
-      });
+    const mockContacts = [
+      { id: '1', name: 'Alice' },
+      { id: '2', name: 'Bob' },
+      { id: '3', name: 'Charlie' },
+    ];
+    setContacts(mockContacts);
   }, []);
 
-  // 메시지 가져오기
+  // 메시지 설정 (더미 데이터)
   useEffect(() => {
     if (selectedUser) {
-      db.collection('messages')
-        .where('receiver', '==', selectedUser.id)
-        .orderBy('timestamp', 'asc')
-        .onSnapshot((snapshot) => {
-          const fetchedMessages = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setMessages(fetchedMessages);
-        });
+      const mockMessages = [
+        { id: '1', sender: 'currentUserId', receiver: selectedUser.id, content: 'Hello!' },
+        { id: '2', sender: selectedUser.id, receiver: 'currentUserId', content: 'Hi there!' },
+      ];
+      setMessages(mockMessages);
     }
   }, [selectedUser]);
 
   // 메시지 전송
   const sendMessage = () => {
     if (newMessage.trim()) {
-      db.collection('messages').add({
-        sender: 'currentUserId', // 현재 사용자 ID (로그인된 사용자)
+      const newMsg = {
+        id: `${Date.now()}`, // 임시 ID
+        sender: 'currentUserId', // 현재 사용자
         receiver: selectedUser.id,
         content: newMessage,
         timestamp: new Date(),
-      });
+      };
+      setMessages((prevMessages) => [...prevMessages, newMsg]); // 로컬 상태에 추가
       setNewMessage(''); // 입력창 초기화
     }
   };
